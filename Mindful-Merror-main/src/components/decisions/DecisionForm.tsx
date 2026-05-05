@@ -1,7 +1,7 @@
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, Plus, X, Save } from 'lucide-react';
-import { Decision, Alternative, DecisionDomain, RiskTolerance, Visibility } from '@/types/decision';
+import { Decision, Alternative, DecisionDomain, RiskTolerance, Visibility, MoodType } from '@/types/decision';
 import { useDecisionStore } from '@/store/decisionStore';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
 import { cn } from '@/lib/utils';
 import { useMongoSync } from '@/hooks/useMongoSync';
+import { MoodSelector } from './MoodSelector';
 
 const DOMAINS: { value: DecisionDomain; label: string; icon: string }[] = [
   { value: 'career', label: 'Career', icon: '' },
@@ -53,6 +54,7 @@ export function DecisionForm({ mode = 'create', initialDecision }: DecisionFormP
   const [newReasoning, setNewReasoning] = useState('');
   const [confidence, setConfidence] = useState([Math.round((initialDecision?.confidence ?? 0.7) * 100)]);
   const [visibility, setVisibility] = useState<Visibility>(initialDecision?.visibility ?? 'private');
+  const [mood, setMood] = useState<MoodType | undefined>(initialDecision?.mood);
 
   // Validation
   const isFormValid = useMemo(() => {
@@ -141,6 +143,7 @@ export function DecisionForm({ mode = 'create', initialDecision }: DecisionFormP
       reasoning,
       finalChoice,
       confidence: confidence[0] / 100,
+      mood,
       visibility,
       createdAt: initialDecision?.createdAt ?? new Date().toISOString(),
       lastRecalledAt: initialDecision?.lastRecalledAt,
@@ -425,10 +428,12 @@ export function DecisionForm({ mode = 'create', initialDecision }: DecisionFormP
         </div>
       </section>
 
-      {/* Confidence & Visibility */}
+      {/* Mood & Confidence */}
       <section className="rounded-xl border border-border bg-card p-6">
-        <h2 className="mb-4 font-serif text-xl font-medium">Confidence & Privacy</h2>
+        <h2 className="mb-4 font-serif text-xl font-medium">Mood & Confidence</h2>
         <div className="space-y-6">
+          <MoodSelector value={mood} onChange={setMood} />
+          
           <div className="space-y-3">
             <Label>Confidence Level: {confidence[0]}%</Label>
             <Slider
@@ -442,23 +447,6 @@ export function DecisionForm({ mode = 'create', initialDecision }: DecisionFormP
             <p className="text-xs text-muted-foreground">
               How confident are you in this decision right now?
             </p>
-          </div>
-          <div className="space-y-2">
-            <Label>Visibility</Label>
-            <RadioGroup
-              value={visibility}
-              onValueChange={(v) => setVisibility(v as Visibility)}
-              className="flex gap-4"
-            >
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="private" id="visibility-private" />
-                <Label htmlFor="visibility-private" className="cursor-pointer">Private</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="shared" id="visibility-shared" />
-                <Label htmlFor="visibility-shared" className="cursor-pointer">Shared</Label>
-              </div>
-            </RadioGroup>
           </div>
         </div>
       </section>

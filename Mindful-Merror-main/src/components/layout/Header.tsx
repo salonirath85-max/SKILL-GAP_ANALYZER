@@ -1,6 +1,7 @@
 import { Plus, MessageCircle, Home, Hexagon } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 export function Header() {
   const location = useLocation();
@@ -20,7 +21,7 @@ export function Header() {
             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 opacity-50 blur-md" />
           </div>
           <div className="hidden sm:block">
-            <h1 className="text-lg font-bold tracking-tight text-white">NEXUS</h1>
+            <h1 className="text-lg font-bold tracking-tight text-white">SKANA</h1>
           </div>
         </Link>
         
@@ -40,6 +41,9 @@ export function Header() {
               <span className="hidden sm:inline">{label}</span>
             </Link>
           ))}
+          <div className="ml-2">
+            <ThemeToggle />
+          </div>
         </nav>
       </div>
     </header>

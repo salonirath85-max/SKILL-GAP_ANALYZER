@@ -20,6 +20,8 @@ export interface Constraints {
   other?: string[];
 }
 
+export type MoodType = 'confident' | 'uncertain' | 'anxious' | 'excited' | 'neutral' | 'hopeful' | 'stressed' | 'calm';
+
 export interface Decision {
   id: string;
   title: string;
@@ -31,6 +33,7 @@ export interface Decision {
   reasoning: string[];
   finalChoice: string;
   confidence: number;
+  mood?: MoodType;
   visibility: 'private' | 'selective' | 'shared';
   reflection?: string;
   outcome?: string;
