@@ -1,0 +1,214 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap');
+
+@layer base {
+  :root {
+    /* Warm, contemplative palette */
+    --background: 40 33% 98%;
+    --foreground: 220 25% 20%;
+
+    --card: 40 30% 99%;
+    --card-foreground: 220 25% 20%;
+
+    --popover: 40 30% 99%;
+    --popover-foreground: 220 25% 20%;
+
+    /* Deep slate-blue - trustworthy, calm */
+    --primary: 210 35% 30%;
+    --primary-foreground: 40 33% 98%;
+
+    /* Warm cream secondary */
+    --secondary: 40 25% 94%;
+    --secondary-foreground: 220 25% 25%;
+
+    /* Muted sage */
+    --muted: 160 15% 92%;
+    --muted-foreground: 220 15% 50%;
+
+    /* Warm amber accent - wisdom, memory */
+    --accent: 35 80% 55%;
+    --accent-foreground: 40 33% 98%;
+
+    /* Soft coral for destructive */
+    --destructive: 0 65% 55%;
+    --destructive-foreground: 40 33% 98%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 210 35% 30%;
+
+    --radius: 0.75rem;
+
+    /* Custom tokens */
+    --memory-glow: 35 80% 55%;
+    --timeline-line: 210 20% 85%;
+    --confidence-high: 160 50% 45%;
+    --confidence-medium: 45 70% 50%;
+    --confidence-low: 0 60% 55%;
+
+    /* Typography */
+    --font-serif: 'Crimson Pro', Georgia, serif;
+    --font-sans: 'Inter', system-ui, sans-serif;
+
+    /* Shadows */
+    --shadow-soft: 0 2px 8px -2px hsl(220 25% 20% / 0.08);
+    --shadow-card: 0 4px 16px -4px hsl(220 25% 20% / 0.1);
+    --shadow-elevated: 0 8px 32px -8px hsl(220 25% 20% / 0.15);
+
+    /* Sidebar */
+    --sidebar-background: 40 25% 96%;
+    --sidebar-foreground: 220 25% 25%;
+    --sidebar-primary: 210 35% 30%;
+    --sidebar-primary-foreground: 40 33% 98%;
+    --sidebar-accent: 35 80% 55%;
+    --sidebar-accent-foreground: 40 33% 98%;
+    --sidebar-border: 40 20% 88%;
+    --sidebar-ring: 210 35% 30%;
+  }
+
+  .dark {
+    --background: 220 25% 10%;
+    --foreground: 40 20% 95%;
+
+    --card: 220 25% 12%;
+    --card-foreground: 40 20% 95%;
+
+    --popover: 220 25% 12%;
+    --popover-foreground: 40 20% 95%;
+
+    --primary: 210 40% 70%;
+    --primary-foreground: 220 25% 10%;
+
+    --secondary: 220 20% 18%;
+    --secondary-foreground: 40 20% 90%;
+
+    --muted: 220 20% 18%;
+    --muted-foreground: 220 15% 60%;
+
+    --accent: 35 75% 50%;
+    --accent-foreground: 220 25% 10%;
+
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 40 20% 95%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 210 40% 70%;
+
+    --timeline-line: 220 20% 25%;
+
+    --sidebar-background: 220 25% 8%;
+    --sidebar-foreground: 40 20% 90%;
+    --sidebar-primary: 210 40% 70%;
+    --sidebar-primary-foreground: 220 25% 10%;
+    --sidebar-accent: 35 75% 50%;
+    --sidebar-accent-foreground: 220 25% 10%;
+    --sidebar-border: 220 20% 20%;
+    --sidebar-ring: 210 40% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+    @apply font-medium tracking-tight;
+  }
+}
+
+@layer components {
+  .memory-card {
+    @apply rounded-xl p-6 transition-all duration-300 backdrop-blur-md border border-white/15;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: var(--shadow-card);
+  }
+
+  .memory-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: var(--shadow-elevated);
+    transform: translateY(-2px);
+  }
+
+  .timeline-dot {
+    @apply w-3 h-3 rounded-full bg-primary relative;
+  }
+
+  .timeline-dot::before {
+    content: '';
+    @apply absolute inset-0 rounded-full bg-primary animate-ping opacity-20;
+  }
+
+  .confidence-indicator {
+    @apply h-2 rounded-full transition-all duration-500;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .slide-up {
+    animation: slideUp 0.4s ease-out forwards;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 20px hsl(var(--memory-glow) / 0.3);
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: var(--font-serif);
+  }
+
+  .font-sans {
+    font-family: var(--font-sans);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
